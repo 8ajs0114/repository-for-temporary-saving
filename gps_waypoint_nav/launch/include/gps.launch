@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+
+  <group ns="gps">
+    <!-- NavSat Serial -->
+    <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node" > <!--output="screen"-->
+      <!-- for Garmin GPS -->
+	    <!--
+      <param name="port" value="$(optenv HUSKY_NAVSAT_PORT /dev/ftdi_FTVBIBT1)" />
+      <param name="baud" value="$(optenv HUSKY_NAVSAT_BAUD 19200)" />
+     	-->
+      <!-- For Novatel GPS -->
+      <param name="port" value="$(optenv HUSKY_NAVSAT_PORT /dev/ttyACM1)" />
+      <param name="baud" value="$(optenv HUSKY_NAVSAT_BAUD 406800)" />
+      
+      <param name="frame_id" value="GPS_link" />
+ 
+   </node>
+
+  <include file="$(find ntrip_ros)/launch/ntrip_ros.launch"></include>
+
+    <!-- NavSat Processing -->
+    <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver">
+      <remap from="/gps/fix" to="/navsat/fix" />
+    </node>
+
+  </group>
+
+</launch>

@@ -340,7 +340,7 @@ double dControlSystem(double errorGap)
 
 double pdControlSystem(double pControl, double dControl) 
 { 
-  double pidControl = pControl + dControl; 
+  double pdControl = pControl + dControl; 
   
   return pdControl; 
 }
